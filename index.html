@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template Mestre: Projeto Integrador PMBOK</title>
+    <title>Template Mestre: Projeto Integrador PMBOK v2</title>
     <style>
         /* ===================================
            CSS VARIABLES - DESIGN SYSTEM
-           (Exatamente como fornecido, mantendo a identidade)
         =================================== */
         :root {
             /* Primary Colors */
@@ -582,7 +581,7 @@
             </div>
         </div>
 
-        <div id="pmbok" class="tab-content" style="display:none;">
+        <div id="pmbok" class="tab-content">
             <div class="pmbok-grid fade-in-up">
                 <div class="pmbok-card">
                     <div class="pmbok-card-header">
@@ -601,4 +600,402 @@
                                 <li><strong>Justificativa:</strong> [Problema de negócio ou oportunidade]</li>
                                 <li><strong>Objetivos SMART:</strong> [Metas específicas, mensuráveis]</li>
                                 <li><strong>Sponsor:</strong> [Patrocinador do Projeto]</li>
-                           
+                                <li><strong>Gerente:</strong> [Nome do GP]</li>
+                                <li><strong>Orçamento:</strong> [Estimativa de alto nível]</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="integracao">Ver Documento Completo</button>
+                    </div>
+                </div>
+
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">2</div>
+                        <h3 class="pmbok-card-title">Escopo do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para garantir que o projeto inclua todo o trabalho necessário para completá-lo com sucesso.
+                    </p>
+                    <span class="status-badge completed">✓ Concluído</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>📝 Declaração de Escopo</h4>
+                            <ul>
+                                <li><strong>Inclusões:</strong> [Entregáveis principais que FAZEM parte]</li>
+                                <li><strong>Exclusões:</strong> [O que NÃO será feito]</li>
+                                <li><strong>Critérios de Aceite:</strong> [Como o cliente validará as entregas]</li>
+                            </ul>
+                        </div>
+                        <div class="pmbok-card-section">
+                            <h4>📊 Estrutura Analítica do Projeto (EAP/WBS)</h4>
+                            <ul>
+                                <li>1.0 Gerenciamento do Projeto</li>
+                                <li>2.0 Planejamento e Análise</li>
+                                <li>4.0 Testes e Validação</li>
+                                <li>5.0 Implantação e Encerramento</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="escopo">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">3</div>
+                        <h3 class="pmbok-card-title">Cronograma do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para gerenciar o término pontual do projeto, definindo atividades, sequenciamento e durações.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>📅 Marcos Principais (Milestones)</h4>
+                            <ul>
+                                <li>Fase 1 (Análise): [Data Fim]</li>
+                                <li>Fase 2 (Desenvolvimento): [Data Fim]</li>
+                                <li>Fase 3 (Go-Live): [Data Fim]</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="cronograma">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">4</div>
+                        <h3 class="pmbok-card-title">Custos do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos envolvidos em planejamento, estimativa, orçamentação e controle de custos do projeto.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>💰 Linha de Base de Custos</h4>
+                            <ul>
+                                <li><strong>CAPEX:</strong> [Custos de Aquisição/Implantação]</li>
+                                <li><strong>OPEX:</strong> [Custos Operacionais/Recorrentes]</li>
+                                <li><strong>Análise de Viabilidade:</strong> ROI, VPL, Payback</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="custos">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">5</div>
+                        <h3 class="pmbok-card-title">Qualidade do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para incorporar a política de qualidade da organização e garantir que o projeto atenda aos padrões.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>📈 Métricas de Qualidade (KPIs)</h4>
+                            <ul>
+                                <li>[Métrica 1, ex: Uptime do Sistema > 99.9%]</li>
+                                <li>[Métrica 2, ex: Nível de Satisfação (CSAT) > 90%]</li>
+                                <li>[Métrica 3, ex: Taxa de Bugs Críticos < 1%]</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="qualidade">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">6</div>
+                        <h3 class="pmbok-card-title">Recursos do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para identificar, adquirir e gerenciar os recursos (humanos e materiais) necessários.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>👤 Matriz RACI</h4>
+                            <ul>
+                                <li>[Atividade 1]: GP (R), Sponsor (A), Equipe (C, I)</li>
+                                <li>[Atividade 2]: ...</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="recursos">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">7</div>
+                        <h3 class="pmbok-card-title">Comunicações</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para garantir que as informações do projeto sejam planejadas, coletadas e distribuídas adequadamente.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>📡 Plano de Comunicação</h4>
+                            <ul>
+                                <li><strong>O quê:</strong> Status Report Semanal</li>
+                                <li><strong>Para quem:</strong> Stakeholders Chave, Sponsor</li>
+                                <li><strong>Canal:</strong> E-mail / Reunião (Daily/Weekly)</li>
+                                <li><strong>Frequência:</strong> Semanal (Toda Sexta-feira)</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="comunicacoes">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">8</div>
+                        <h3 class="pmbok-card-title">Riscos do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos de planejamento, identificação, análise e resposta aos riscos do projeto.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>🔥 Matriz de Riscos (Prob. vs. Impacto)</h4>
+                            <ul>
+                                <li>[Risco 1: Atraso na entrega de fornecedor]</li>
+                                <li>[Risco 2: Mudança de escopo (Scope Creep)]</li>
+                                <li>[Risco 3: Indisponibilidade da equipe]</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="riscos">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">9</div>
+                        <h3 class="pmbok-card-title">Aquisições do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para comprar ou adquirir produtos, serviços ou resultados externos à equipe do projeto.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>🛒 Plano de Aquisições</h4>
+                            <ul>
+                                <li><strong>O quê:</strong> [Software de CRM, Servidores, Consultoria]</li>
+                                <li><strong>Tipo de Contrato:</strong> [Preço Fixo, Time & Material]</li>
+                                <li><strong>Critérios de Seleção:</strong> [Preço, Qualidade, Prazo]</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="aquisicoes">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">10</div>
+                        <h3 class="pmbok-card-title">Partes InteressADAS</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para identificar pessoas ou organizações impactadas pelo projeto e gerenciar suas expectativas.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>🤝 Matriz de Engajamento</h4>
+                            <ul>
+                                <li><strong>Sponsor:</strong> Gerenciar de perto (Alto Poder, Alto Interesse)</li>
+                                <li><strong>Usuário Final:</strong> Manter informado</li>
+                                <li><strong>Reguladores:</strong> Monitorar</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="stakeholders">Ver Documento Completo</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="data" class="tab-content">
+            <div class="data-integration fade-in-up">
+                <h2 class="data-integration-title">Integração de Dados (Data-Driven Decisions)</h2>
+                <p class="text-center mb-4" style="color: var(--gray-600);">Fontes de dados para análise de mercado, viabilidade e segmentação.</p>
+                <div class="data-sources">
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">📈</div>
+                        <h4>Nielsen / Kantar</h4>
+                        <p>Market share e comportamento do consumidor (FMCG).</p>
+                    </div>
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">💊</div>
+                        <h4>IQVIA / InforPrice</h4>
+                        <p>Demanda e preços no varejo farmacêutico (ex: ABRAFARMA).</p>
+                    </div>
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">🌍</div>
+                        <h4>IBGE / PNAD</h4>
+                        <p>Análise populacional, renda e indicadores sociais.</p>
+                    </div>
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">🏥</div>
+                        <h4>DataSUS</h4>
+                        <p>Indicadores de saúde pública e epidemiologia.</p>
+                    </div>
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">📊</div>
+                        <h4>Euromonitor</h4>
+                        <p>Relatórios de tendências e análise de concorrência.</p>
+                    </div>
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">🗺️</div>
+                        <h4>Fontes GIS (Geoportal)</h4>
+                        <p>Inteligência de localização e potencial de área.</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div id="export" class="tab-content">
+            <div class="export-section fade-in-up">
+                <h2 class="data-integration-title">Exportar Relatórios</h2>
+                <div class="export-buttons">
+                    <button class="export-btn">Gerar PDF Consolidado</button>
+                    <button class="export-btn">Exportar p/ MS Project (XML)</button>
+                    <button class="export-btn secondary">Exportar Planilha de Custos (XLS)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalCloseBtn">&times;</button>
+            <h2 id="modalTitle">Documento Completo</h2>
+            <div id="modalBody">
+                <p>Aqui seria carregado o conteúdo detalhado do documento, usando o ID do botão clicado (ex: "integracao", "escopo", etc.).</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- 1. LÓGICA DAS ABAS (TABS) ---
+            const tabs = document.querySelectorAll('.nav-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+
+                    // Desativa todas as abas e conteúdos
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => {
+                        c.classList.remove('active');
+                        c.style.display = 'none'; // Garante que está oculto
+                    });
+
+                    // Ativa a aba e conteúdo clicado
+                    tab.classList.add('active');
+                    const activeContent = document.getElementById(tabId);
+                    if (activeContent) {
+                        activeContent.style.display = 'block';
+                        activeContent.classList.add('active');
+                        // Adiciona animação ao trocar de aba
+                        activeContent.classList.remove('fade-in-up');
+                        void activeContent.offsetWidth; // Truque para reiniciar a animação
+                        activeContent.classList.add('fade-in-up');
+                    }
+                });
+            });
+
+            // Torna a aba 'overview' visível por padrão ao carregar
+            document.getElementById('overview').style.display = 'block';
+
+            // --- 2. LÓGICA DE EXPANSÃO DOS CARTÕES (PMBOK CARDS) ---
+            const cards = document.querySelectorAll('.pmbok-card');
+
+            cards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Só expande/recolhe se o clique NÃO foi no botão "Ver Documento"
+                    if (!e.target.classList.contains('expand-btn')) {
+                        card.classList.toggle('expanded');
+                    }
+                });
+            });
+
+            // --- 3. LÓGICA DO MODAL ---
+            const modal = document.getElementById('projectModal');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const expandButtons = document.querySelectorAll('.expand-btn');
+
+            // Função para abrir o modal
+            const openModal = (docId) => {
+                let formattedId = docId.charAt(0).toUpperCase() + docId.slice(1);
+                modalTitle.textContent = `Documento Detalhado: ${formattedId.replace('Stakeholders', 'Partes Interessadas')}`;
+                
+                // Conteúdo de Exemplo do Modal
+                modalBody.innerHTML = `
+                    <div class="pmbok-card-section">
+                        <h4>Artefato do PMBOK - ${formattedId}</h4>
+                        <p>Este espaço seria preenchido dinamicamente com o conteúdo integral do plano de gerenciamento de ${formattedId}.</p>
+                        <p><strong>Status:</strong> Em desenvolvimento. O esqueleto lógico está pronto para receber o detalhamento do projeto.</p>
+                        <ul>
+                            <li>Estrutura de dados para o artefato</li>
+                            <li>Integração com ferramenta de documentação (simulada)</li>
+                            <li>Revisão de qualidade e conformidade com o PMBOK</li>
+                        </ul>
+                    </div>
+                `;
+                
+                modal.classList.add('active');
+            };
+
+            // Função para fechar o modal
+            const closeModal = () => {
+                modal.classList.remove('active');
+            };
+
+            // Adiciona ouvintes aos botões "Ver Documento Completo"
+            expandButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Impede que o card expanda/recolha
+                    const docId = btn.getAttribute('data-modal');
+                    openModal(docId);
+                });
+            });
+
+            // Fechar modal ao clicar no 'X'
+            modalCloseBtn.addEventListener('click', closeModal);
+
+            // Fechar modal ao clicar fora do conteúdo
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
