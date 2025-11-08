@@ -1,0 +1,1001 @@
+Sim, entendi perfeitamente. A sua solicitação é evoluir o excelente template que você criou para o projeto da BYD, transformando-o em uma ferramenta-mestre (um "scaffolding") que seja:
+ * Reutilizável: Facilmente adaptável para diferentes clientes e segmentos de negócio (farmacêutico, varejo, etc.).
+ * "Clean Code": Mover a lógica de interação (como cliques em abas e expansão de cartões) do HTML (onclick) para um bloco de JavaScript dedicado, tornando o código mais limpo e fácil de manter.
+ * Completo: Preencher o conteúdo de todas as 10 áreas do PMBOK (em vez de apenas as duas iniciais) para que sirva como um guia completo.
+ * Focado em Dados: Ter a seção "Dados & APIs" pronta para destacar as fontes que você mencionou (IBGE, IQVIA, Nielsen, etc.), que é o núcleo da análise de negócios.
+Eu preparei abaixo o código completo que atende a todas essas premissas.
+O que foi feito:
+ * Conteúdo Generalizado: O "Overview" agora usa placeholders como [Nome do Projeto].
+ * 10 Áreas Completas: Todos os 10 cartões do PMBOK foram criados, com conteúdo de exemplo para "Cronograma", "Custos", "Qualidade", etc. Os novos cartões estão com o status "Planejado" para indicar que são um template a ser preenchido.
+ * Seção de Dados (Data-Driven): A aba "Dados & APIs" foi preenchida com as fontes de dados que você listou (IBGE, IQVIA, Nielsen, etc.), mostrando como elas se aplicam.
+ * JavaScript "Clean Code": Todo o JavaScript foi movido do HTML para um único bloco <script> no final do <body>. Ele agora gerencia as abas, a expansão dos cartões (sem conflitar com o botão "Ver Documento") e a lógica do modal.
+🚀 Template Mestre: Projeto Integrador PMBOK (Versão 2.0)
+Este é o código completo e aprimorado. Você pode copiá-lo diretamente para um novo arquivo index.html e usá-lo como base para qualquer novo projeto.
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Mestre: Projeto Integrador PMBOK</title>
+    <style>
+        /* ===================================
+           CSS VARIABLES - DESIGN SYSTEM
+           (Exatamente como fornecido, mantendo a identidade)
+        =================================== */
+        :root {
+            /* Primary Colors */
+            --primary: #1e4b8a;
+            --primary-light: #3a6bb5;
+            --primary-dark: #0d2847;
+            
+            /* Secondary Colors */
+            --secondary: #764ba2;
+            --accent: #667eea;
+            
+            /* Neutral Colors */
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            
+            /* Status Colors */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+        }
+
+        /* ===================================
+           RESET & BASE
+        =================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            color: var(--gray-900);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ===================================
+           LAYOUT
+        =================================== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        /* ===================================
+           HEADER
+        =================================== */
+        .header {
+            background: var(--white);
+            border-radius: 16px;
+            padding: var(--space-8);
+            box-shadow: var(--shadow-xl);
+            margin-bottom: var(--space-6);
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .header-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: var(--space-4);
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: var(--white);
+            padding: var(--space-2) var(--space-4);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* ===================================
+           NAVIGATION TABS
+        =================================== */
+        .nav-tabs {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-6);
+            overflow-x: auto;
+            padding-bottom: var(--space-2);
+        }
+
+        .nav-tab {
+            background: var(--white);
+            border: none;
+            padding: var(--space-3) var(--space-6);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray-600);
+            transition: var(--transition);
+            white-space: nowrap;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            color: var(--primary);
+        }
+
+        .nav-tab.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* ===================================
+           PMBOK GRID
+        =================================== */
+        .pmbok-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .pmbok-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: var(--space-6);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pmbok-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: var(--transition);
+        }
+
+        .pmbok-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .pmbok-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .pmbok-card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+        }
+
+        .pmbok-card-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .pmbok-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .pmbok-card-description {
+            color: var(--gray-600);
+            margin-bottom: var(--space-4);
+            line-height: 1.6;
+        }
+
+        .pmbok-card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pmbok-card.expanded .pmbok-card-content {
+            max-height: 2000px;
+        }
+
+        .pmbok-card-section {
+            background: var(--gray-50);
+            padding: var(--space-4);
+            border-radius: 12px;
+            margin-bottom: var(--space-3);
+        }
+
+        .pmbok-card-section h4 {
+            color: var(--primary);
+            margin-bottom: var(--space-2);
+            font-size: 1rem;
+        }
+        
+        .pmbok-card-section p {
+             color: var(--gray-800);
+             font-size: 0.95rem;
+        }
+
+        .pmbok-card-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .pmbok-card-section li {
+            padding: var(--space-2) 0;
+            padding-left: var(--space-6);
+            position: relative;
+        }
+
+        .pmbok-card-section li::before {
+            content: '✓';
+            position: absolute;
+            left: var(--space-2);
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .expand-btn {
+            width: 100%;
+            background: var(--gray-100);
+            border: none;
+            padding: var(--space-3);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .expand-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* ===================================
+           STATUS BADGE
+        =================================== */
+        .status-badge {
+            display: inline-block;
+            padding: var(--space-1) var(--space-3);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: var(--space-2);
+        }
+
+        .status-badge.completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-badge.in-progress {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.planned {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* ===================================
+           DATA INTEGRATION SECTION
+        =================================== */
+        .data-integration {
+            background: var(--white);
+            border-radius: 16px;
+            padding: var(--space-8);
+            box-shadow: var(--shadow-xl);
+            margin-bottom: var(--space-6);
+        }
+
+        .data-integration-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: var(--space-6);
+            text-align: center;
+        }
+
+        .data-sources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .data-source {
+            background: var(--gray-50);
+            padding: var(--space-4);
+            border-radius: 12px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .data-source:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-4px);
+        }
+
+        .data-source-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-2);
+        }
+
+        .data-source h4 {
+            font-size: 1rem;
+            margin-bottom: var(--space-1);
+        }
+        
+        .data-source p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+        
+        .data-source:hover p {
+            color: var(--gray-100);
+        }
+
+        /* ===================================
+           MODAL
+        =================================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: var(--space-8);
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            margin: var(--space-4);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content h2 {
+            color: var(--primary);
+            margin-bottom: var(--space-4);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gray-100);
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--gray-600);
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            color: var(--white);
+            transform: rotate(90deg);
+        }
+
+        /* ===================================
+           EXPORT BUTTONS
+        =================================== */
+        .export-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: var(--space-8);
+            box-shadow: var(--shadow-xl);
+            text-align: center;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: var(--space-4);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: var(--space-4) var(--space-8);
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+
+        .export-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .export-btn.secondary {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .export-btn.secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        /* ===================================
+           TAB CONTENT
+        =================================== */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ===================================
+           RESPONSIVE
+        =================================== */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--space-4);
+            }
+
+            .header {
+                padding: var(--space-6);
+            }
+
+            .pmbok-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs {
+                justify-content: flex-start;
+            }
+
+            .export-buttons {
+                flex-direction: column;
+            }
+
+            .export-btn {
+                width: 100%;
+            }
+        }
+
+        /* ===================================
+           ANIMATIONS
+        =================================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* ===================================
+           UTILITIES
+        =================================== */
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: var(--space-4); }
+        .mb-4 { margin-bottom: var(--space-4); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header fade-in-up">
+            <h1 class="header-title">📊 Projeto Integrador PMBOK</h1>
+            <p class="header-subtitle">[Nome do Projeto] - Gestão de Projetos</p>
+            <span class="header-badge">Metodologia PMBOK 10 Áreas</span>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="overview">📋 Visão Geral</button>
+            <button class="nav-tab" data-tab="pmbok">📚 PMBOK 10 Áreas</button>
+            <button class="nav-tab" data-tab="data">📊 Dados & APIs</button>
+            <button class="nav-tab" data-tab="export">📥 Exportar</button>
+        </nav>
+
+        <div id="overview" class="tab-content active fade-in-up">
+            <div class="data-integration">
+                <h2 class="data-integration-title">🎯 Sobre o Projeto</h2>
+                <div class="pmbok-card-section">
+                    <h4>Empresa: [Nome da Empresa]</h4>
+                    <p><strong>Segmento:</strong> [Segmento de Mercado, ex: Varejo Farmacêutico, Mobilidade]</p>
+                    <p><strong>Projeto:</strong> [Descrição do Projeto, ex: Lançamento de Nova Linha de Produto]</p>
+                    <p><strong>Objetivo:</strong> [Objetivo principal do projeto]</p>
+                </div>
+
+                <div class="pmbok-card-section">
+                    <h4>Escopo do Trabalho</h4>
+                    <ul>
+                        <li>Planejamento completo seguindo metodologia PMBOK</li>
+                        <li>10 documentos (um para cada área de gerenciamento)</li>
+                        <li>Integração com dados reais de mercado (IBGE, IQVIA, Nielsen, etc.)</li>
+                        <li>Análise de viabilidade técnica e financeira</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="pmbok" class="tab-content" style="display:none;">
+            <div class="pmbok-grid fade-in-up">
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">1</div>
+                        <h3 class="pmbok-card-title">Integração do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para identificar, definir, combinar, unificar e coordenar os processos de gerenciamento do projeto.
+                    </p>
+                    <span class="status-badge completed">✓ Concluído</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>📄 Termo de Abertura do Projeto (TAP)</h4>
+                            <ul>
+                                <li><strong>Justificativa:</strong> [Problema de negócio ou oportunidade]</li>
+                                <li><strong>Objetivos SMART:</strong> [Metas específicas, mensuráveis]</li>
+                                <li><strong>Sponsor:</strong> [Patrocinador do Projeto]</li>
+                                <li><strong>Gerente:</strong> [Nome do GP]</li>
+                                <li><strong>Orçamento:</strong> [Estimativa de alto nível]</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="integracao">Ver Documento Completo</button>
+                    </div>
+                </div>
+
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">2</div>
+                        <h3 class="pmbok-card-title">Escopo do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para garantir que o projeto inclua todo o trabalho necessário para completá-lo com sucesso.
+                    </p>
+                    <span class="status-badge completed">✓ Concluído</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>📝 Declaração de Escopo</h4>
+                            <ul>
+                                <li><strong>Inclusões:</strong> [Entregáveis principais que FAZEM parte]</li>
+                                <li><strong>Exclusões:</strong> [O que NÃO será feito]</li>
+                                <li><strong>Critérios de Aceite:</strong> [Como o cliente validará as entregas]</li>
+                            </ul>
+                        </div>
+                        <div class="pmbok-card-section">
+                            <h4>📊 Estrutura Analítica do Projeto (EAP/WBS)</h4>
+                            <ul>
+                                <li>1.0 Gerenciamento do Projeto</li>
+                                <li>2.0 Planejamento e Análise</li>
+                                <li>3.0 Desenvolvimento / Execução</li>
+                                <li>4.0 Testes e Validação</li>
+                                <li>5.0 Implantação e Encerramento</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="escopo">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">3</div>
+                        <h3 class="pmbok-card-title">Cronograma do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para gerenciar o término pontual do projeto, definindo atividades, sequenciamento e durações.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>📅 Marcos Principais (Milestones)</h4>
+                            <ul>
+                                <li>Fase 1 (Análise): [Data Fim]</li>
+                                <li>Fase 2 (Desenvolvimento): [Data Fim]</li>
+                                <li>Fase 3 (Go-Live): [Data Fim]</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="cronograma">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">4</div>
+                        <h3 class="pmbok-card-title">Custos do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos envolvidos em planejamento, estimativa, orçamentação e controle de custos do projeto.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>💰 Linha de Base de Custos</h4>
+                            <ul>
+                                <li><strong>CAPEX:</strong> [Custos de Aquisição/Implantação]</li>
+                                <li><strong>OPEX:</strong> [Custos Operacionais/Recorrentes]</li>
+                                <li><strong>Análise de Viabilidade:</strong> ROI, VPL, Payback</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="custos">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">5</div>
+                        <h3 class="pmbok-card-title">Qualidade do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para incorporar a política de qualidade da organização e garantir que o projeto atenda aos padrões.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>📈 Métricas de Qualidade (KPIs)</h4>
+                            <ul>
+                                <li>[Métrica 1, ex: Uptime do Sistema > 99.9%]</li>
+                                <li>[Métrica 2, ex: Nível de Satisfação (CSAT) > 90%]</li>
+                                <li>[Métrica 3, ex: Taxa de Bugs Críticos < 1%]</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="qualidade">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">6</div>
+                        <h3 class="pmbok-card-title">Recursos do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para identificar, adquirir e gerenciar os recursos (humanos e materiais) necessários.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>👤 Matriz RACI</h4>
+                            <ul>
+                                <li>[Atividade 1]: GP (R), Sponsor (A), Equipe (C, I)</li>
+                                <li>[Atividade 2]: ...</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="recursos">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">7</div>
+                        <h3 class="pmbok-card-title">Comunicações</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para garantir que as informações do projeto sejam planejadas, coletadas e distribuídas adequadamente.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>📡 Plano de Comunicação</h4>
+                            <ul>
+                                <li><strong>O quê:</strong> Status Report Semanal</li>
+                                <li><strong>Para quem:</strong> Stakeholders Chave, Sponsor</li>
+                                <li><strong>Canal:</strong> E-mail / Reunião (Daily/Weekly)</li>
+                                <li><strong>Frequência:</strong> Semanal (Toda Sexta-feira)</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="comunicacoes">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">8</div>
+                        <h3 class="pmbok-card-title">Riscos do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos de planejamento, identificação, análise e resposta aos riscos do projeto.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>🔥 Matriz de Riscos (Prob. vs. Impacto)</h4>
+                            <ul>
+                                <li>[Risco 1: Atraso na entrega de fornecedor]</li>
+                                <li>[Risco 2: Mudança de escopo (Scope Creep)]</li>
+                                <li>[Risco 3: Indisponibilidade da equipe]</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="riscos">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">9</div>
+                        <h3 class="pmbok-card-title">Aquisições do Projeto</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para comprar ou adquirir produtos, serviços ou resultados externos à equipe do projeto.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>🛒 Plano de Aquisições</h4>
+                            <ul>
+                                <li><strong>O quê:</strong> [Software de CRM, Servidores, Consultoria]</li>
+                                <li><strong>Tipo de Contrato:</strong> [Preço Fixo, Time & Material]</li>
+                                <li><strong>Critérios de Seleção:</strong> [Preço, Qualidade, Prazo]</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="aquisicoes">Ver Documento Completo</button>
+                    </div>
+                </div>
+                
+                <div class="pmbok-card">
+                    <div class="pmbok-card-header">
+                        <div class="pmbok-card-number">10</div>
+                        <h3 class="pmbok-card-title">Partes InteressADAS</h3>
+                    </div>
+                    <p class="pmbok-card-description">
+                        Processos para identificar pessoas ou organizações impactadas pelo projeto e gerenciar suas expectativas.
+                    </p>
+                    <span class="status-badge planned">... Planejado</span>
+                    
+                    <div class="pmbok-card-content">
+                        <div class="pmbok-card-section">
+                            <h4>🤝 Matriz de Engajamento</h4>
+                            <ul>
+                                <li><strong>Sponsor:</strong> Gerenciar de perto (Alto Poder, Alto Interesse)</li>
+                                <li><strong>Usuário Final:</strong> Manter informado</li>
+                                <li><strong>Reguladores:</strong> Monitorar</li>
+                            </ul>
+                        </div>
+                        <button class="expand-btn" data-modal="stakeholders">Ver Documento Completo</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="data" class="tab-content" style="display:none;">
+            <div class="data-integration fade-in-up">
+                <h2 class="data-integration-title">Integração de Dados (Data-Driven Decisions)</h2>
+                <p class="text-center mb-4" style="color: var(--gray-600);">Fontes de dados para análise de mercado, viabilidade e segmentação.</p>
+                <div class="data-sources">
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">📈</div>
+                        <h4>Nielsen / Kantar</h4>
+                        <p>Market share e comportamento do consumidor (FMCG).</p>
+                    </div>
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">💊</div>
+                        <h4>IQVIA / InforPrice</h4>
+                        <p>Demanda e preços no varejo farmacêutico (ex: ABRAFARMA).</p>
+                    </div>
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">🌍</div>
+                        <h4>IBGE / PNAD</h4>
+                        <p>Análise populacional, renda e indicadores sociais.</p>
+                    </div>
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">🏥</div>
+                        <h4>DataSUS</h4>
+                        <p>Indicadores de saúde pública e epidemiologia.</p>
+                    </div>
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">📊</div>
+                        <h4>Euromonitor</h4>
+                        <p>Relatórios de tendências e análise de concorrência.</p>
+                    </div>
+                    
+                    <div class="data-source">
+                        <div class="data-source-icon">🗺️</div>
+                        <h4>Fontes GIS (Geoportal)</h4>
+                        <p>Inteligência de localização e potencial de área.</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div id="export" class="tab-content" style="display:none;">
+            <div class="export-section fade-in-up">
+                <h2 class="data-integration-title">Exportar Relatórios</h2>
+                <div class="export-buttons">
+                    <button class="export-btn">Gerar PDF Consolidado</button>
+                    <button class="export-btn">Exportar p/ MS Project (XML)</button>
+                    <button class="export-btn secondary">Exportar Planilha de Custos (XLS)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalCloseBtn">&times;</button>
+            <h2 id="modalTitle">Documento Completo</h2>
+            <div id="modalBody">
+                <p>Aqui seria carregado o conteúdo detalhado do documento, possivelmente via AJAX, ou um iframe para um PDF, ou o conteúdo completo do artefato do PMBOK (como o Termo de Abertura detalhado).</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- 1. LÓGICA DAS ABAS (TABS) ---
+            const tabs = document.querySelectorAll('.nav-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+
+                    // Desativa todas as abas e conteúdos
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => {
+                        c.classList.remove('active');
+                        c.style.display = 'none'; // Garante que está oculto
+                    });
+
+                    // Ativa a aba e conteúdo clicado
+                    tab.classList.add('active');
+                    const activeContent = document.getElementById(tabId);
+                    if (activeContent) {
+                        activeContent.style.display = 'block';
+                        activeContent.classList.add('active');
+                        // Adiciona animação ao trocar de aba
+                        activeContent.classList.remove('fade-in-up');
+                        void activeContent.offsetWidth; // Truque para reiniciar a animação
+                        activeContent.classList.add('fade-in-up');
+                    }
+                });
+            });
+
+            // --- 2. LÓGICA DE EXPANSÃO DOS CARTÕES (PMBOK CARDS) ---
+            const cards = document.querySelectorAll('.pmbok-card');
+
+            cards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Só expande se o clique NÃO foi no botão "Ver Documento"
+                    if (!e.target.classList.contains('expand-btn')) {
+                        card.classList.toggle('expanded');
+                    }
+                });
+            });
+
+            // --- 3. LÓGICA DO MODAL ---
+            const modal = document.getElementById('projectModal');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const expandButtons = document.querySelectorAll('.expand-btn');
+
+            // Função para abrir o modal
+            const openModal = (docId) => {
+                // Aqui você pode carregar dados específicos baseado no docId
+                modalTitle.textContent = `Documento: ${docId.charAt(0).toUpperCase() + docId.slice(1)}`;
+                modalBody.innerHTML = `<p>Carregando conteúdo para <strong>${docId}</strong>... (Esta é uma simulação. O documento completo seria carregado aqui.)</p>`;
+                
+                modal.classList.add('active');
+            };
+
+            // Função para fechar o modal
+            const closeModal = () => {
+                modal.classList.remove('active');
+            };
+
+            // Adiciona ouvintes aos botões "Ver Documento Completo"
+            expandButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Impede que o card expanda/recolha
+                    const docId = btn.getAttribute('data-modal');
+                    openModal(docId);
+                });
+            });
+
+            // Fechar modal ao clicar no 'X'
+            modalCloseBtn.addEventListener('click', closeModal);
+
+            // Fechar modal ao clicar fora do conteúdo
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
+
